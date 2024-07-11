@@ -5,6 +5,9 @@ import Footer from "../../pages/footer";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DownloadIcon from '@mui/icons-material/Download';
 import './Pyq.css'; 
+import {Link} from 'react-router-dom';
+import MyChatbot from '../ChatBot/chatbot';
+
 
 function Pyq() {
   const yearFiles = [
@@ -61,7 +64,7 @@ function Pyq() {
           { name: 'Operating Systems Lab', files: ['4thsem_os_lab.pdf'] },
           { name: 'Microprocessor Lab', files: ['4thsem_microprocessor_lab.pdf'] },
           { name: 'Python Language Programming Lab', files: ['4thsem_python_lab.pdf'] },
-          { name: 'Python Programming/Computer System Security', files: ['4thsem_python_security.pdf'] }
+          { name: 'Computer System Security/Python Programming', files: ['4thsem_python_security.pdf'] }
         ]
       }
     },
@@ -152,9 +155,30 @@ function Pyq() {
   const { id } = useParams();
   const yearItem = yearFiles.find((item) => item.year === id);
   const [selectedSemester, setSelectedSemester] = useState(null);
+  const yearLink={"1st":"/fstyear","2nd":"/sndyear","3rd":"/trdyear","4th":"/fothyear"};
 
   return (
     <div className="page-container">
+      <Link to={yearLink[yearItem.year]} className="back-icon" style={{ position: 'absolute', top: '75px !important', left: '35px', fontSize: '42px' }}>
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="42" 
+          height="42" 
+          fill="currentColor" 
+          viewBox="0 0 16 16" 
+          style={{ 
+            fontWeight: 'bold',
+            position: 'fixed', 
+            top: 130, 
+            left: 20
+          }}
+        >
+          <path 
+            fillRule="evenodd" 
+            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
+          />
+        </svg>
+      </Link>
       <Header />
       <div className="container-pyq">
         <h2 className="year-heading">Download Previous Year Questions - {id} Year</h2>
@@ -171,50 +195,51 @@ function Pyq() {
                   <button className="back-btn" onClick={() => setSelectedSemester(null)}>
                     <i className="back-icon">&larr;</i> Back 
                   </button>
+                  
                   <div className="subjects-container">
                     {selectedSemester === 'odd' ? yearItem.oddSemesters.subjects.map((subject, subjIndex) => (
                       <div key={subjIndex} className="subject-box">
-                        <h4 className="subject-title">{subject.name}</h4>
-                        <ul>
+                       <div className='subject-title-container'> <h4 className="subject-title">{subject.name}</h4> </div>
+                        
                           {subject.files.map((file, fileIndex) => (
                             <div key={fileIndex} className="file-item">
-                              <span>{file}</span>
+                              {/* <span>{file}</span> */}
                               <div className="file-actions">
                                 <div className="icon-container" onClick={() => handleView(`pyqs/${yearItem.year}Year/${file}`)}>
                                   <VisibilityIcon className="icon" />
-                                  <span className="icon-label">View</span>
+                                  {/* <span className="icon-label">View</span> */}
                                 </div>
                                 <div className="icon-container" onClick={() => handleDownload(`pyqs/${yearItem.year}Year/${file}`)}>
                                   <DownloadIcon className="icon" />
-                                  <span className="icon-label">Download</span>
+                                  {/* <span className="icon-label">Download</span> */}
                                 </div>
                               </div>
                               {subject.files.length > 1 && fileIndex < subject.files.length - 1 && <hr className="file-divider" />}
                             </div>
                           ))}
-                        </ul>
+                     
                       </div>
                     )) : yearItem.evenSemesters.subjects.map((subject, subjIndex) => (
                       <div key={subjIndex} className="subject-box">
-                        <h4 className="subject-title">{subject.name}</h4>
-                        <ul>
+                       <div className='subject-title-container'> <h4 className="subject-title">{subject.name}</h4> </div>
+                  
                           {subject.files.map((file, fileIndex) => (
                             <div key={fileIndex} className="file-item">
-                              <span>{file}</span>
-                              <div className="file-actions">
-                                <div className="icon-container" onClick={() => handleView(`pyqs/${yearItem.year}Year/${file}`)}>
-                                  <VisibilityIcon className="icon" />
-                                  <span className="icon-label">View</span>
-                                </div>
-                                <div className="icon-container" onClick={() => handleDownload(`pyqs/${yearItem.year}Year/${file}`)}>
-                                  <DownloadIcon className="icon" />
-                                  <span className="icon-label">Download</span>
-                                </div>
+                            {/* <span>{file}</span> */}
+                            <div className="file-actions">
+                              <div className="icon-container" onClick={() => handleView(`pyqs/${yearItem.year}Year/${file}`)}>
+                                <VisibilityIcon className="icon" />
+                                {/* <span className="icon-label">View</span> */}
                               </div>
-                              {subject.files.length > 1 && fileIndex < subject.files.length - 1 && <hr className="file-divider" />}
+                              <div className="icon-container" onClick={() => handleDownload(`pyqs/${yearItem.year}Year/${file}`)}>
+                                <DownloadIcon className="icon" />
+                                {/* <span className="icon-label">Download</span> */}
+                              </div>
                             </div>
+                            {subject.files.length > 1 && fileIndex < subject.files.length - 1 && <hr className="file-divider" />}
+                          </div>
                           ))}
-                        </ul>
+                       
                       </div>
                     ))}
                   </div>
@@ -226,7 +251,7 @@ function Pyq() {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer /> <MyChatbot />
     </div>
   );
 }

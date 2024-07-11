@@ -38,13 +38,13 @@ color: rgb(4, 46, 61) !important;
 .active .book{
 color: black !important;
 }
-.container{
+.container-main{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   height: 50vh;
-  margin-bottom: 100px;
+  margin-bottom: 70px;
 
 }
 
